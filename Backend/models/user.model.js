@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         firstname: {
             type: String,
             required: true,
-            minlength: [10, "First Name must be atleast 10 characters"],
+            minlength: [3, "First Name must be atleast 10 characters"],
         },
         lastname: {
             type: String,
@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({_id: this.id}, process.env.JWT_SECRET); //it makes sure that which data will be stored in the token.
-    return token;
+    return jwt.sign({_id: this._id}, process.env.JWT_SECRET, { expiresIn: '24h'}); //it makes sure that which data will be stored in the token.
 }
 
 userSchema.methods.comparePassword = async function (password) {
