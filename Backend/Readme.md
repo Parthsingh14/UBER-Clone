@@ -205,6 +205,120 @@ This endpoint is used to log out the user.
     ```
 
 
+
+### POST /captain/register
+
+#### Description
+This endpoint is used to register a new captain.
+
+#### Request Body
+The request body should be a JSON object with the following fields:
+
+- `fullname.firstname` (string, required): The first name of the captain. Must be at least 3 characters long.
+- `fullname.lastname` (string, optional): The last name of the captain.
+- `email` (string, required): The email address of the captain. Must be a valid email format.
+- `password` (string, required): The password for the captain. Must be at least 6 characters long.
+- `vehicle.color` (string, required): The color of the vehicle. Must be at least 3 characters long.
+- `vehicle.plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
+- `vehicle.capacity` (number, required): The capacity of the vehicle. Must be at least 1.
+- `vehicle.vehicleType` (string, required): The type of the vehicle. Must be one of `car`, `motorcycle`, or `auto`.
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "jane.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Responses
+
+- **201 Created**
+  - Description: Captain successfully registered.
+  - Body: JSON object containing the captain details and authentication token.
+  - Example:
+    ```json
+    {
+      "captain": {
+        "_id": "60d0fe4f5311236168a109cb",
+        "fullname": {
+          "firstname": "Jane",
+          "lastname": "Doe"
+        },
+        "email": "jane.doe@example.com",
+        "vehicle": {
+          "color": "red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+    ```
+
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid email",
+          "param": "email",
+          "location": "body"
+        },
+        {
+          "msg": "First name must be at least 3 characters long",
+          "param": "fullname.firstname",
+          "location": "body"
+        },
+        {
+          "msg": "Password must be at least 6 characters long",
+          "param": "password",
+          "location": "body"
+        },
+        {
+          "msg": "Vehicle color must be at least 3 characters long",
+          "param": "vehicle.color",
+          "location": "body"
+        },
+        {
+          "msg": "Vehicle plate must be at least 3 characters long",
+          "param": "vehicle.plate",
+          "location": "body"
+        },
+        {
+          "msg": "Vehicle capacity must be at least 1 characters long",
+          "param": "vehicle.capacity",
+          "location": "body"
+        },
+        {
+          "msg": "Vehicle type must be car, motorcycle or auto",
+          "param": "vehicle.vehicleType",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+
+
+
+
+
+
 ## Setup
 
 To set up the project, follow these steps:
