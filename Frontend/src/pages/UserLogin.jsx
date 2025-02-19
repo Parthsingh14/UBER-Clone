@@ -1,21 +1,39 @@
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Context_user_data } from "../context/Context_user";
+import axios from "axios";
 function UserLogin() {
     //two-way binding with react because react dont know what we are actually typing in the form
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState({});
+    const {user,setUser} = useContext(Context_user_data);
+    const navigate = useNavigate();
 
-    const submitHandler = (e)=>{
+    const submitHandler = async (e)=>{
         e.preventDefault();
-        setUserData({
+        const userData = {
             email: email,
             password: password
-        })
-        console.log(userData);
+        }
+
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData);
+        if(response.status === 200){
+            const data = response.data;
+            setUser(data.user);
+            navigate('/home');
+        }
+
+
+        //reset the form after successful login
         setEmail(""); //set email to empty
         setPassword("");// set password to empty
     }
+
+
+
+
+
+    
     return (
         <div className="h-screen p-7 flex flex-col justify-between">
             <div>

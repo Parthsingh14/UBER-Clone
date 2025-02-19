@@ -16,11 +16,11 @@ const Context_user = ({children})=> {
 
     return (
         <div>
-            <Context_user_data.Provider value={[user,setUser]}>
+            <Context_user_data.Provider value={{user,setUser}}>
                 {children}
             </Context_user_data.Provider>
         </div>
     )
 }
 
-export default Context_user
+export default Context_user;
