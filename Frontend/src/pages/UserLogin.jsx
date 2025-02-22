@@ -6,7 +6,7 @@ function UserLogin() {
     //two-way binding with react because react dont know what we are actually typing in the form
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {user,setUser} = useContext(Context_user_data);
+    const {setUser} = useContext(Context_user_data);
     const navigate = useNavigate();
 
     const submitHandler = async (e)=>{
@@ -20,6 +20,7 @@ function UserLogin() {
         if(response.status === 200){
             const data = response.data;
             setUser(data.user);
+            localStorage.setItem('token', data.token);
             navigate('/home');
         }
 

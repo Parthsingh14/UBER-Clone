@@ -11,7 +11,7 @@ function UserSignup() {
   //const [userData, setUserData] = useState({});
 
   const navigate = useNavigate();
-  const { user, setUser } = useContext(Context_user_data);
+  const { setUser } = useContext(Context_user_data);
 
 
 
@@ -33,7 +33,8 @@ function UserSignup() {
       const data = response.data;
 
       setUser(data.user);
-      navigate("/home");
+      localStorage.setItem("token", data.token);
+      navigate("/login");
     }
 
     setEmail("");
