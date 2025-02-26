@@ -1,13 +1,21 @@
 import PropTypes from 'prop-types';
 
-function ConfirmedRide(props) {
+function RidePopup(props) {
     return (
         <div>
-            <h5 onClick={()=> props.setconfirmRidePanel(false) } className="p-1 text-center w-[93%] absolute top-0"><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
-            <h3 className='text-2xl font-semibold mb-5'>Confirm your Ride</h3>
+            <h5 onClick={()=>{props.setridePopupPanel(false)}} className="p-1 text-center w-[93%] absolute top-0"><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
+            <h3 className='text-2xl font-semibold mb-5'>New Ride Available!</h3>
+
+            <div className="flex items-center justify-between p-3 bg-yellow-400 rounded-lg mt-4">
+                <div className="flex items-center gap-3">
+                    <img className="h-12 w-12 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1XcY3kldqRD2y9c44DDoi8XNmJqFx_aFD0Q&s"></img>
+                    <h2 className="text-lg font-medium">Nico Robin</h2>
+                </div>
+                <h5 className="text-lg font-semibold">2.2KM</h5>
+            </div>
+        
 
             <div className='flex flex-col gap-2 justify-between items-center'>
-                <img className='h-20' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTWeN3hcqn-G2idpfomts-GZ5JWzcIhFKpyCmnMU9cz8wOiAwNCNRFsl5C-nkHGEYCPos&usqp=CAU" alt="" />
 
                 <div className='w-full mt-5'>
 
@@ -38,19 +46,18 @@ function ConfirmedRide(props) {
                         </div>
                     </div>
                 </div>
-                <button onClick={()=> { 
-                    props.setvehicleFound(true)
-                    props.setconfirmRidePanel(false)
-                }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button>
+                <div className='flex justify-between items-center w-full mt-5'>
+                    <button onClick={()=>{props.setridePopupPanel(false)}} className='mt-1 bg-gray-300 text-gray-700 font-semibold p-3 px-10 rounded-lg'>Ignore</button>
+                    <button onClick={()=> {props.setConfirmridePopupPanel(true)}} className='bg-green-600 text-white font-semibold p-3 px-10 rounded-lg'>Accept</button>
+                </div>
             </div>
         </div>
     )
-}
 
-ConfirmedRide.propTypes = {
-    setconfirmRidePanel: PropTypes.func.isRequired,
-    setvehicleFound: PropTypes.func.isRequired,
 };
 
-export default ConfirmedRide
-
+RidePopup.propTypes = {
+    setridePopupPanel: PropTypes.func.isRequired,
+    setConfirmridePopupPanel: PropTypes.func.isRequired,
+};
+export default RidePopup
