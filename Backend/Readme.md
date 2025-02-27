@@ -1,3 +1,4 @@
+```markdown
 # Backend API Documentation
 
 ## Endpoints
@@ -72,8 +73,6 @@ Example:
       ]
     }
     ```
-
-
 
 ### POST /users/login
 
@@ -204,8 +203,6 @@ This endpoint is used to log out the user.
     }
     ```
 
-
-
 ### POST /captain/register
 
 #### Description
@@ -312,8 +309,6 @@ Example:
       ]
     }
     ```
-
-
 
 ### POST /captain/login
 
@@ -460,33 +455,261 @@ This endpoint is used to log out the captain.
     }
     ```
 
+### `/ride` Routes Documentation
 
+#### POST `/ride/create`
 
-## Setup
+**Description**: Create a new ride.
 
-To set up the project, follow these steps:
+**Request Body**:
+- `pickup` (string, required): The pickup location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+- `vehicleType` (string, required): The type of vehicle. Must be one of `auto`, `car`, or `bike`.
 
-1. Install dependencies:
-    ```sh
-    npm install
+**Responses**:
+- **200 OK**
+  - Description: Ride successfully created.
+  - Body: JSON object containing the ride details.
+  - Example:
+    ```json
+    {
+      "user": "60d0fe4f5311236168a109ca",
+      "pickup": "123 Main St",
+      "destination": "456 Elm St",
+      "otp": "123456",
+      "fare": 50
+    }
+    ```
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid Pickup Location",
+          "param": "pickup",
+          "location": "body"
+        },
+        {
+          "msg": "Invalid Destination Location",
+          "param": "destination",
+          "location": "body"
+        },
+        {
+          "msg": "Invalid Vehicle Type",
+          "param": "vehicleType",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+- **500 Internal Server Error**
+  - Description: Server error.
+  - Body: JSON object containing the error message.
+  - Example:
+    ```json
+    {
+      "message": "All Fields are required"
+    }
     ```
 
-2. Create a `.env` file in the 
+#### GET `/ride/get-fare`
 
-Backend
+**Description**: Get the fare for a ride.
 
- directory with the following content:
+**Query Parameters**:
+- `pickup` (string, required): The pickup location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+
+**Responses**:
+- **200 OK**
+  - Description: Fare successfully retrieved.
+  - Body: JSON object containing the fare details.
+  - Example:
+    ```json
+    {
+      "auto": 40,
+      "car": 60,
+      "bike": 30
+    }
     ```
-    PORT=3000
-    DB_CONNECT=<your_mongodb_connection_string>
-    JWT_SECRET=<your_jwt_secret>
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid Pickup Location",
+          "param": "pickup",
+          "location": "query"
+        },
+        {
+          "msg": "Invalid Destination Location",
+          "param": "destination",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+- **500 Internal Server Error**
+  - Description: Server error.
+  - Body: JSON object containing the error message.
+  - Example:
+    ```json
+    {
+      "message": "Error fetching distance and time"
+    }
     ```
 
-3. Start the server:
-    ```sh
-    npm start
+### `/maps` Routes Documentation
+
+#### GET `/maps/get-coordinates`
+
+**Description**: Get the coordinates for a given address.
+
+**Query Parameters**:
+- `address` (string, required): The address to get coordinates for. Must be at least 3 characters long.
+
+**Responses**:
+- **200 OK**
+  - Description: Coordinates successfully retrieved.
+  - Body: JSON object containing the latitude and longitude.
+  - Example:
+    ```json
+    {
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+    ```
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid address",
+          "param": "address",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+- **404 Not Found**
+  - Description: Coordinates not found.
+  - Body: JSON object containing the error message.
+  - Example:
+    ```json
+    {
+      "error": "coordinate not found"
+    }
     ```
 
-The server will be running on `http://localhost:4000`.
-```
+#### GET `/maps/get-distance-time`
 
+**Description**: Get the distance and time between two locations.
+
+**Query Parameters**:
+- `origin` (string, required): The origin location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+
+**Responses**:
+- **200 OK**
+  - Description: Distance and time successfully retrieved.
+  - Body: JSON object containing the distance and time.
+  - Example:
+    ```json
+    {
+      "distance": {
+        "text": "5.3 km",
+        "value": 5300
+      },
+      "duration": {
+        "text": "15 mins",
+        "value": 900
+      }
+    }
+    ```
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid origin",
+          "param": "origin",
+          "location": "query"
+        },
+        {
+          "msg": "Invalid destination",
+          "param": "destination",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+- **404 Not Found**
+  - Description: Distance and time not found.
+  - Body: JSON object containing the error message.
+  - Example:
+    ```json
+    {
+      "error": "distance and time not found"
+    }
+    ```
+
+#### GET `/maps/get-suggestions`
+
+**Description**: Get autocomplete suggestions for a given input.
+
+**Query Parameters**:
+- `input` (string, required): The input to get suggestions for. Must be at least 3 characters long.
+
+**Responses**:
+- **200 OK**
+  - Description: Suggestions successfully retrieved.
+  - Body: JSON object containing the suggestions.
+  - Example:
+    ```json
+    [
+      {
+        "description": "San Francisco, CA, USA",
+        "place_id": "ChIJIQBpAG2ahYAR_6128GcTUEo"
+      },
+      {
+        "description": "San Jose, CA, USA",
+        "place_id": "ChIJ9T_5iuTKj4ARe3GfygqMnbk"
+      }
+    ]
+    ```
+- **400 Bad Request**
+  - Description: Validation errors or missing required fields.
+  - Body: JSON object containing the validation errors.
+  - Example:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid input",
+          "param": "input",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+- **500 Internal Server Error**
+  - Description: Server error.
+  - Body: JSON object containing the error message.
+  - Example:
+    ```json
+    {
+      "error": "internal server error"
+    }
+    ```
