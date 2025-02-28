@@ -18,6 +18,7 @@ import CaptainRiding from './pages/CaptainRiding'
 function App() {
   return (
     <div>
+      
       <Routes>
         <Route path='/' element={<Start />} />       
          
@@ -26,7 +27,7 @@ function App() {
         <Route path='/signup' element={<UserSignup />} />
 
         {/* captain path */}
-        <Route path='/captain-login' element={<CaptainLogin />} />
+        <Route path='/captain-login' element={  <CaptainLogin />  } />
         <Route path='/captain-signup' element={<CaptainSignup />} />
 
         {/* home routes */}
@@ -42,6 +43,7 @@ function App() {
 
 
       </Routes>
+      
     </div>
   )
 }

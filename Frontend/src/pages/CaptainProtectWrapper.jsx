@@ -2,43 +2,46 @@ import { useNavigate } from "react-router-dom"
 import PropTypes from 'prop-types';
 import { useEffect,useState,useContext } from "react";
 import axios from "axios";
-import { Context_captain_data } from "../context/Context_captain";
-
+import { CaptainDataContext } from '../context/CaptainContext';
 
 
 function CaptainProtectWrapper({children}) {
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const [isLoading,setIsLoading] = useState(true);
-    const {setCaptain} = useContext(Context_captain_data);
+    const { captain, setCaptain } = useContext(CaptainDataContext)
+    const [ isLoading, setIsLoading ] = useState(true)
 
-    useEffect(()=>{
-        if(!token){
-            navigate('/captain-login') // Redirect to login page if no token found in local storage.
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/captain-login')
         }
-    }, [token, navigate])
 
-    
-    axios.get(`${import.meta.env.VITE_BASE_URL}/captain/profile`,{
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    }).then((response)=>{
-        if(response.status === 200){
-            const data = response.data;
-            setCaptain(data.captain);
-            setIsLoading(false);
-        }
-    }).catch((error)=>{
-        console.error(error);
-        navigate('/captain-login') // Redirect to login page if error occurred while fetching captain data.
-    })
+        axios.get(`${import.meta.env.VITE_BASE_URL}/captain/profile`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                setCaptain(response.data.captain)
+                setIsLoading(false)
+            }
+        })
+            .catch(err => {
+
+                localStorage.removeItem('token')
+                navigate('/captain-login')
+                console.log(err);
+            })
+    }, [ token ])
 
 
 
-    if(isLoading){
-        return <div>Loading...</div>
+    if (isLoading) {
+        return (
+            <div>Loading...</div>
+        )
     }
 
 

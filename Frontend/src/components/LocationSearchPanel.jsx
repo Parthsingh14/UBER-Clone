@@ -2,17 +2,12 @@ import PropTypes from 'prop-types';
 
 const LocationSearchPanel = ({ suggestions, setPickup, setDestination, activeField }) => {
 
-    console.log("Suggestions:", suggestions);
-
-
     const handleSuggestionClick = (suggestion) => {
         if (activeField === 'pickup') {
             setPickup(suggestion.description)
         } else if (activeField === 'destination') {
             setDestination(suggestion.description)
         }
-        // setVehiclePanel(true)
-        // setPanelOpen(false)
     }
 
     return (

@@ -14,7 +14,7 @@ function ConfirmedRide(props) {
                     <div className='flex items-center gap-5 p-3 border-b-1'>
                         <i className='ri-map-pin-2-fill text-lg'></i>
                         <div>
-                            <h3 className='text-lg font-medium'>562/11-A</h3>
+                            <h3 className='text-lg font-medium'>{props.pickup}</h3>
                             <p className='text-sm text-gray-600'>Kankariya Talab, Bhopal</p>
                         </div>
                     </div>
@@ -23,7 +23,7 @@ function ConfirmedRide(props) {
                     <div className='flex items-center gap-5 p-3 border-b-1'>
                         <i className='ri-map-pin-2-fill text-lg'></i>
                         <div>
-                            <h3 className='text-lg font-medium'>562/11-A</h3>
+                            <h3 className='text-lg font-medium'>{props.destination}</h3>
                             <p className='text-sm text-gray-600'>Kankariya Talab, Bhopal</p>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ function ConfirmedRide(props) {
                     <div className='flex items-center gap-5 p-3'>
                         <i className='ri-currency-line text-lg'></i>
                         <div>
-                            <h3 className='text-lg font-medium'>$125</h3>
+                            <h3 className='text-lg font-medium'>₹{props.fare[props.vehicleType]}</h3>
                             <p className='text-sm text-gray-600'>Cash</p>
                         </div>
                     </div>
@@ -50,6 +50,10 @@ function ConfirmedRide(props) {
 ConfirmedRide.propTypes = {
     setconfirmRidePanel: PropTypes.func.isRequired,
     setvehicleFound: PropTypes.func.isRequired,
+    pickup: PropTypes.string.isRequired,
+    destination: PropTypes.string.isRequired,
+    fare: PropTypes.object.isRequired,
+    vehicleType: PropTypes.string.isRequired,
 };
 
 export default ConfirmedRide

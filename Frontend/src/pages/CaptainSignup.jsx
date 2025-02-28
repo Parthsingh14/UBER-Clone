@@ -1,47 +1,46 @@
-import { useContext, useState } from "react";
+
+import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { Context_captain_data } from "../context/Context_captain";
+import { CaptainDataContext } from '../context/CaptainContext'
 import axios from "axios";
 
 function CaptainSignup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [vehicleColor, setVehicleColor] = useState("");
-  const [vehiclePlate, setVehiclePlate] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [vehicleCapacity, setVehicleCapacity] = useState("");
-
-  
-  const { setCaptain } = useContext(Context_captain_data);
   const navigate = useNavigate();
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ firstName, setFirstName ] = useState('')
+  const [ lastName, setLastName ] = useState('')
 
+  const [ vehicleColor, setVehicleColor ] = useState('')
+  const [ vehiclePlate, setVehiclePlate ] = useState('')
+  const [ vehicleCapacity, setVehicleCapacity ] = useState('')
+  const [ vehicleType, setVehicleType ] = useState('')
+  
+  
   const submitHandler = async (e) => {
-    e.preventDefault();
-    const newCaptain = {
-      fullname:{
-        firstname: firstname,
-        lastname: lastname
+    e.preventDefault()
+    const captainData = {
+      fullname: {
+        firstname: firstName,
+        lastname: lastName
       },
-        email: email,
-        password: password,
-        vehicle: {
-            color: vehicleColor,
-            plate: vehiclePlate,
-            vehicleType: vehicleType,
-            capacity: vehicleCapacity,
-          }
-        }
-
+      email: email,
+      password: password,
+      vehicle: {
+        color: vehicleColor,
+        plate: vehiclePlate,
+        capacity: vehicleCapacity,
+        vehicleType: vehicleType
+      }
+    }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`, newCaptain);
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`, captainData);
             if (response.status === 201) {
               const data = response.data;
-              setCaptain(data.captain);
               localStorage.setItem('token', data.token);
               navigate('/captain-login');
+              
             }
           } catch (error) {
             console.error("Signup failed:", error.response?.data?.message || error.message);
@@ -49,8 +48,8 @@ function CaptainSignup() {
 
         setEmail("");
         setPassword("");
-        setFirstname("");
-        setlastname("");
+        setFirstName('')
+        setLastName('')
         setVehicleColor("");
         setVehiclePlate("");
         setVehicleType("");
@@ -69,7 +68,6 @@ function CaptainSignup() {
         />
 
         <form
-          action=""
           onSubmit={(e) => {
             submitHandler(e);
           }}
@@ -79,16 +77,16 @@ function CaptainSignup() {
           <div className="flex gap-4 mb-5">
             <input
               required
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               className="bg-[#eeeeee]  w-1/2 rounded px-4 py-2 border text-base placeholder:text-sm"
               type="text"
               placeholder="firstname"
             />
             <input
               required
-              value={lastname}
-              onChange={(e) => setlastname(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               className="bg-[#eeeeee]  w-1/2 rounded px-4 py-2 border text-base placeholder:text-sm"
               type="text"
               placeholder="lastname"
