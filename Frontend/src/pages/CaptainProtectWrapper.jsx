@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom"
 import PropTypes from 'prop-types';
 import { useEffect,useState,useContext } from "react";
 import axios from "axios";
-import { CaptainDataContext } from '../context/CaptainContext';
+import { Captain_Data_Context } from '../context/CapatainContext';
 
 
 function CaptainProtectWrapper({children}) {
 
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const { captain, setCaptain } = useContext(CaptainDataContext)
+    const { setCaptain } = useContext(Captain_Data_Context)
     const [ isLoading, setIsLoading ] = useState(true)
 
 

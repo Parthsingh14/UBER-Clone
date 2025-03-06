@@ -1,11 +1,14 @@
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { CaptainDataContext } from '../context/CaptainContext'
+import { Captain_Data_Context } from '../context/CapatainContext'
 import axios from "axios";
+
 
 function CaptainSignup() {
   const navigate = useNavigate();
+  const {setCaptain} = useContext(Captain_Data_Context);
+
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ firstName, setFirstName ] = useState('')
@@ -38,9 +41,9 @@ function CaptainSignup() {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`, captainData);
             if (response.status === 201) {
               const data = response.data;
+              setCaptain(data.captain);
               localStorage.setItem('token', data.token);
-              navigate('/captain-login');
-              
+              navigate('/captain-login');              
             }
           } catch (error) {
             console.error("Signup failed:", error.response?.data?.message || error.message);

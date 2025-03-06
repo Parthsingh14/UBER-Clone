@@ -12,7 +12,7 @@ const Context_user = ({children})=> {
         }
     })
 
-
+   console.log(user)
 
     return (
         <div>

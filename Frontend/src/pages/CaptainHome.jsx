@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import CaptainDetails from "../components/CaptainDetails";
+import CaptainDetail from "../components/CaptainDetail";
 import RidePopup from "../components/RidePopup";
 import ConfirmRidePopup from "../components/ConfirmRidePopup";
 import { useContext, useRef, useState, useEffect } from "react";
@@ -14,21 +14,8 @@ function CaptainHome() {
   const [ConfirmridePopupPanel, setConfirmridePopupPanel] = useState(false);
   const ConfirmridePopupPanelRef = useRef(null);
 
-  //const { captain } = useContext(CaptainDataContext);
-
-  // useEffect(() => {
-  //   console.log("CaptainHome mounted");
-  //   return () => {
-  //     console.log("CaptainHome unmounted");
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("Captain data in CaptainHome:", captain);
-  // }, [captain]);
-
   useGSAP(function() {
-    console.log("ridePopupPanel state changed:", ridePopupPanel);
+    //console.log("ridePopupPanel state changed:", ridePopupPanel);
     if (ridePopupPanel) {
       gsap.to(ridePopupPanelRef.current, {
         transform: 'translateY(0)'
@@ -41,7 +28,7 @@ function CaptainHome() {
   }, [ridePopupPanel]);
 
   useGSAP(function() {
-    console.log("ConfirmridePopupPanel state changed:", ConfirmridePopupPanel);
+    //console.log("ConfirmridePopupPanel state changed:", ConfirmridePopupPanel);
     if (ConfirmridePopupPanel) {
       gsap.to(ConfirmridePopupPanelRef.current, {
         transform: 'translateY(0)'
@@ -62,7 +49,7 @@ function CaptainHome() {
         </Link>
       </div>
 
-      <div className="h-3/5">
+      <div className="h-3/5"> 
         <img
           className="h-full w-full object-cover"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-o_2s3RDzPvv5OSRUe8lqiRp_FqtBExlQvA&s"
@@ -71,7 +58,7 @@ function CaptainHome() {
       </div>
 
       <div className="h-2/5 p-6">
-        <CaptainDetails />
+        <CaptainDetail />
       </div>
 
       <div ref={ridePopupPanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12">

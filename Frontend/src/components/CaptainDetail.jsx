@@ -1,9 +1,13 @@
 import React, { useContext } from 'react'
-import { CaptainDataContext } from '../context/CapatainContext'
+import { Captain_Data_Context } from '../context/CapatainContext'
 
 const CaptainDetail = () => {
 
-    const { captain } = useContext(CaptainDataContext)
+    const { captain } = useContext(Captain_Data_Context)
+    console.log("Captain Details",captain)
+    if(!captain){
+        return <h1>Loading...</h1>
+    }
 
     return (
         <div>
